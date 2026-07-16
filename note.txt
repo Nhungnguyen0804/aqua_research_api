@@ -1,0 +1,9 @@
+python -m venv lit-env
+
+git ignore
+env/ 
+
+cmd: where python 
+
+E:\LitResearcher\lit-env\Scripts\python.exe -m pip install 
+
