@@ -1,40 +1,56 @@
-from langgraph.graph import StateGraph, END
-from semanticscholar import SemanticScholar
 import arxiv
+import requests
+
 from src.state import LitState
+from src.config import MY_GMAIL,CORE_API_KEY
 
+def search_openalex(topic: str, max_results: int = 50) -> list[dict]:
+    url = "https://api.openalex.org/works"
+    params = {
+        "search": topic,
+        "per-page": min(max_results, 200),
+        "mailto": MY_GMAIL,
+    }
+    resp = requests.get(url, params=params, timeout=30)
+    resp.raise_for_status()
+    data = resp.json().get("results", [])
 
-# def search_semantic_scholar(topic: str) -> list[dict]:
-#     sch = SemanticScholar()
-#     results = sch.search_paper(topic, limit=50)
+    papers = []
+    for p in data:
+        authorships = p.get("authorships") or []
+        primary_loc = p.get("primary_location") or {}
+        source = primary_loc.get("source") or {}
+        oa = p.get("open_access") or {}
 
-#     papers = []
+        # ghép abstract từ inverted index -> text thường
+        inv = p.get("abstract_inverted_index")
+        abstract = None
+        if inv:
+            positions = {}
+            for word, idxs in inv.items():
+                for i in idxs:
+                    positions[i] = word
+            abstract = " ".join(positions[i] for i in sorted(positions))
 
-#     for paper in results:
-#         d = paper._data
+        papers.append({
+            "source": "openalex",
+            "paper_id": p.get("id"),
+            "title": p.get("title"),
+            "abstract": abstract,
+            "authors": [a.get("author", {}).get("display_name") for a in authorships],
+            "year": p.get("publication_year"),
+            "publication_date": p.get("publication_date"),
+            "doi": p.get("doi"),
+            "url": p.get("id"),
+            "pdf_url": oa.get("oa_url"),
+            "venue": source.get("display_name"),
+            "journal": source.get("display_name"),
+            "citation_count": p.get("cited_by_count"),
+            "reference_count": len(p.get("referenced_works") or []),
+            "categories": [c.get("display_name") for c in (p.get("concepts") or [])],
+        })
+    return papers
 
-#         external_ids = d.get("externalIds") or {}
-#         open_access = d.get("openAccessPdf") or {}
-
-#         papers.append({
-#             "source": "semantic_scholar",
-#             "paper_id": d.get("paperId"),
-#             "title": d.get("title"),
-#             "abstract": d.get("abstract"),
-#             "authors": [a["name"] for a in d.get("authors", [])],
-#             "year": d.get("year"),
-#             "publication_date": d.get("publicationDate"),
-#             "doi": external_ids.get("DOI"),
-#             "url": d.get("url"),
-#             "pdf_url": open_access.get("url"),
-#             "venue": d.get("venue"),
-#             "journal": d.get("journal"),
-#             "citation_count": d.get("citationCount"),
-#             "reference_count": d.get("referenceCount"),
-#             "categories": d.get("fieldsOfStudy", []),
-#         })
-
-#     return papers
 
 def search_arxiv(topic:str) -> list[dict]:
     client = arxiv.Client()
@@ -62,16 +78,51 @@ def search_arxiv(topic:str) -> list[dict]:
         })
     return papers
 
-    
+def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) -> list[dict]:
+    url = "https://api.core.ac.uk/v3/search/works"
+    headers = {"Authorization": f"Bearer {api_key}"}
+    params = {
+        "q": topic,
+        "limit": min(max_results, 100),
+    }
+    resp = requests.get(url, headers=headers, params=params, timeout=30)
+    resp.raise_for_status()
+    results = resp.json().get("results", [])
+    papers = []
+    for p in results:
+        authors = [a.get("name") for a in (p.get("authors") or [])]
+        papers.append({
+            "source": "core",
+            "paper_id": p.get("id"),
+            "title": p.get("title"),
+            "abstract": p.get("abstract"),
+            "authors": authors,
+            "year": p.get("yearPublished"),
+            "publication_date": p.get("publishedDate"),
+            "doi": p.get("doi"),
+            "url": p.get("downloadUrl") or p.get("sourceFulltextUrls", [None])[0],
+            "pdf_url": p.get("downloadUrl"),
+            "venue": p.get("publisher"),
+            "journal": p.get("publisher"),
+            "citation_count": p.get("citationCount"),
+            "reference_count": None,
+            "categories": p.get("fieldOfStudy") or [],
+        })
+    return papers
+
+
+
 def search_node(state: LitState) -> LitState:
     print(f"[search] query={state['query']}")
     query = state['query']
 
     papers_arxiv = search_arxiv(query)
-    # papers_scholar = search_semantic_scholar(query)
+    papers_openalex = search_openalex(query)
+    papers_core = search_core(query)
     
     papers = []
     papers.extend(papers_arxiv)  
-    # papers.extend(papers_scholar)
+    papers.extend(papers_openalex)
+    papers.extend(papers_core)
     state['raw_papers'] = papers
     return state 
