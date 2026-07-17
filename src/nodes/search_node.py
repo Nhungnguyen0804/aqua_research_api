@@ -91,6 +91,7 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
     papers = []
     for p in results:
         authors = [a.get("name") for a in (p.get("authors") or [])]
+        urls = p.get("sourceFulltextUrls") or [None]
         papers.append({
             "source": "core",
             "paper_id": p.get("id"),
@@ -100,7 +101,7 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
             "year": p.get("yearPublished"),
             "publication_date": p.get("publishedDate"),
             "doi": p.get("doi"),
-            "url": p.get("downloadUrl") or p.get("sourceFulltextUrls", [None])[0],
+            "url": p.get("downloadUrl") or urls[0],
             "pdf_url": p.get("downloadUrl"),
             "venue": p.get("publisher"),
             "journal": p.get("publisher"),
@@ -109,8 +110,6 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
             "categories": p.get("fieldOfStudy") or [],
         })
     return papers
-
-
 
 def search_node(state: LitState) -> LitState:
     print(f"[search] query={state['query']}")

@@ -1,10 +1,46 @@
-from src.nodes import search_node
 
-state = {
-    "query": "Drug Discovery"
-}
+from src.state import LitState
+from langgraph.graph import StateGraph, START, END
 
-result = search_node(state)
+from PIL import Image
+import io
 
-print(len(result["raw_papers"]))
-print(result["raw_papers"][0])
+from src.nodes.search_node  import search_node
+from src.services.llm import invoke_gemini
+from src.utils import get_current_time 
+from src.nodes.dedup import dedup_node
+
+'''
+add_node(name, function) → đăng ký node.
+add_edge(A, B) → nối từ node A sang node B.
+'''
+
+
+if __name__ == "__main__":
+    graph_builder = StateGraph(LitState)
+    graph_builder.add_node("search_node", search_node)
+    graph_builder.add_edge(START, "search_node")
+    graph_builder.add_node("dedup_node", dedup_node)
+    graph_builder.add_edge('search_node','dedup_node')
+    graph_builder.add_edge("dedup_node", END)
+    lit_agent_graph = graph_builder.compile()
+
+
+
+
+    png = lit_agent_graph.get_graph().draw_mermaid_png()
+
+    img = Image.open(io.BytesIO(png))
+    img.show()
+
+
+    # test
+    state = {
+        "query": "Retrieval Augmented Generation",
+        "raw_papers": [],
+        "deduped_papers": []
+    }
+
+    result = lit_agent_graph.invoke(state)
+
+    print(len(result)) # số key trong state hiện tại 
