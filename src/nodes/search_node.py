@@ -113,8 +113,8 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
     return papers
 
 def search_node(state: LitState) -> LitState:
-    print(f"[search] query={state['query']}")
-    query = state['query']
+    print(f"[search] query={state['topic']}")
+    query = state['topic']
     sub_queries = state.get("sub_queries", [])
     print(f"[search] sub_queries={state['sub_queries']}")
     if not sub_queries:
