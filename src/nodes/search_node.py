@@ -1,5 +1,6 @@
 import arxiv
 import requests
+import time 
 
 from src.state import LitState
 from src.config import MY_GMAIL,CORE_API_KEY
@@ -85,7 +86,7 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
         "q": topic,
         "limit": min(max_results, 100),
     }
-    resp = requests.get(url, headers=headers, params=params, timeout=30)
+    resp = requests.get(url, headers=headers, params=params, timeout=300)
     resp.raise_for_status()
     results = resp.json().get("results", [])
     papers = []
@@ -114,14 +115,19 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
 def search_node(state: LitState) -> LitState:
     print(f"[search] query={state['query']}")
     query = state['query']
+    sub_queries = state.get("sub_queries", [])
+    print(f"[search] sub_queries={state['sub_queries']}")
+    if not sub_queries:
+        sub_queries = query
 
-    papers_arxiv = search_arxiv(query)
-    papers_openalex = search_openalex(query)
-    papers_core = search_core(query)
+    all_papers = []
+    for sub_query in sub_queries:
+        papers_arxiv = search_arxiv(sub_query)
+        papers_openalex = search_openalex(sub_query)
+        papers_core = search_core(sub_query)
     
-    papers = []
-    papers.extend(papers_arxiv)  
-    papers.extend(papers_openalex)
-    papers.extend(papers_core)
-    state['raw_papers'] = papers
+        all_papers.extend(papers_arxiv)  
+        all_papers.extend(papers_openalex)
+        all_papers.extend(papers_core)
+    state['raw_papers'] = all_papers
     return state 
