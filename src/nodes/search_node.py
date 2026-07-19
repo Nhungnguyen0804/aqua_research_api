@@ -55,7 +55,7 @@ def search_openalex(topic: str, max_results: int = 50) -> list[dict]:
 
 def search_arxiv(topic:str) -> list[dict]:
     client = arxiv.Client()
-    search = arxiv.Search(query=topic, max_results=50, sort_by=arxiv.SortCriterion.Relevance)
+    search = arxiv.Search(query=topic, max_results=20, sort_by=arxiv.SortCriterion.Relevance)
     results = client.results(search)
 
     papers = []
@@ -80,37 +80,51 @@ def search_arxiv(topic:str) -> list[dict]:
     return papers
 
 def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) -> list[dict]:
+    # time.sleep(30)# req mỗi lần 30s
     url = "https://api.core.ac.uk/v3/search/works"
     headers = {"Authorization": f"Bearer {api_key}"}
     params = {
         "q": topic,
         "limit": min(max_results, 100),
     }
-    resp = requests.get(url, headers=headers, params=params, timeout=300)
-    resp.raise_for_status()
-    results = resp.json().get("results", [])
-    papers = []
-    for p in results:
-        authors = [a.get("name") for a in (p.get("authors") or [])]
-        urls = p.get("sourceFulltextUrls") or [None]
-        papers.append({
-            "source": "core",
-            "paper_id": p.get("id"),
-            "title": p.get("title"),
-            "abstract": p.get("abstract"),
-            "authors": authors,
-            "year": p.get("yearPublished"),
-            "publication_date": p.get("publishedDate"),
-            "doi": p.get("doi"),
-            "url": p.get("downloadUrl") or urls[0],
-            "pdf_url": p.get("downloadUrl"),
-            "venue": p.get("publisher"),
-            "journal": p.get("publisher"),
-            "citation_count": p.get("citationCount"),
-            "reference_count": None,
-            "categories": p.get("fieldOfStudy") or [],
-        })
-    return papers
+    for retry in range(3):
+        try: 
+            resp = requests.get(url, headers=headers, params=params, timeout=300)
+            resp.raise_for_status()
+            results = resp.json().get("results", [])
+            papers = []
+            for p in results:
+                authors = [a.get("name") for a in (p.get("authors") or [])]
+                urls = p.get("sourceFulltextUrls") or [None]
+                papers.append({
+                    "source": "core",
+                    "paper_id": p.get("id"),
+                    "title": p.get("title"),
+                    "abstract": p.get("abstract"),
+                    "authors": authors,
+                    "year": p.get("yearPublished"),
+                    "publication_date": p.get("publishedDate"),
+                    "doi": p.get("doi"),
+                    "url": p.get("downloadUrl") or urls[0],
+                    "pdf_url": p.get("downloadUrl"),
+                    "venue": p.get("publisher"),
+                    "journal": p.get("publisher"),
+                    "citation_count": p.get("citationCount"),
+                    "reference_count": None,
+                    "categories": p.get("fieldOfStudy") or [],
+                })
+            return papers
+        except requests.exceptions.Timeout:
+            print(f"[CORE TIMEOUT] {topic} (retry {retry+1})")
+        except requests.exceptions.HTTPError as e:
+            if resp.status_code == 504:
+                print(f"[CORE 504] {topic} (retry {retry+1})")
+            else:
+                raise
+        time.sleep(2)
+    
+    print(f"[SKIP] {topic}")
+    return []
 
 def search_node(state: LitState) -> LitState:
     print(f"[search] query={state['topic']}")

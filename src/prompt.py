@@ -31,24 +31,3 @@ def build_query_expansion_prompt(query: str) -> list[dict]:
         {"role": "user", "content": query}
     ]
 
-
-def build_filter_prompt(pico: dict, papers: list[dict]) -> list[dict]:
-    system_text = f'''
-        {DEFAULT_TEXT}
-        Tiêu chí Eligibility (PICO) để đánh giá bài báo có nên đưa vào Systematic Literature Review:
-        - Population: {pico['population']}
-        - Intervention: {pico['intervention']}
-        - Comparison: {pico['comparison']}
-        - Outcome: {pico['outcome']}
-
-        Với mỗi bài báo trong danh sách JSON dưới đây (gồm title, abstract),
-        đánh giá bài đó có phù hợp với TẤT CẢ các tiêu chí PICO trên hay không.
-        Trả về JSON dạng: [{{"id": "...", "relevant": true/false, "reason": "..."}}]
-        Chỉ trả JSON, không giải thích thêm ngoài JSON.
-    '''
-    import json
-    papers_text = json.dumps(papers, ensure_ascii=False)
-    return [
-        {"role": "system", "content": system_text},
-        {"role": "user", "content": papers_text}
-    ]

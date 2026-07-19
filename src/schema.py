@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field # định nghĩa cấu trúc dữ liệu (schema) bằng class.
 
 # BaseModel (Pydantic) = cái mà mình muốn LLM trả về trông như thế nào 
 # field tạo json schema cho gemini biet  , gom type va mota trong json đó giúp model hiểu rõ hơn 
@@ -11,3 +11,12 @@ class PICO(BaseModel):
 
 class StringList(BaseModel):
     string_list: list[str]
+
+class PaperRelevance(BaseModel):
+    id: str
+    relevant: bool
+    reason: str
+
+class FilterResult(BaseModel):
+    results: list[PaperRelevance]
+

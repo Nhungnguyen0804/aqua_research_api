@@ -9,5 +9,5 @@ def query_expansion_node(state):
     response = invoke_gemini(messages, StringList)
     sub_queries = response.string_list
     print(f'[sub_queries] = {sub_queries}')
-
-    return {"sub_queries": sub_queries}
+    state['sub_queries'] =sub_queries
+    return state 
