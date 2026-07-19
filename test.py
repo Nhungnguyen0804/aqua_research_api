@@ -5,13 +5,12 @@ from PIL import Image
 import io
 
 from src.nodes.search_node  import search_node
-from src.services.llm import invoke_gemini
-from src.utils import get_current_time 
+
 from src.nodes.dedup import dedup_node
 from src.nodes.query_expand import query_expansion_node
 from src.nodes.rq_pico import rq_pico_node
 from src.nodes.screen_node import screen_node
-from src.nodes.filter_paper import filter_node
+from src.nodes.eligibility_node import eligibility_node, criteria_node
 '''
 add_node(name, function) → đăng ký node.
 add_edge(A, B) → nối từ node A sang node B.
@@ -34,7 +33,14 @@ if __name__ == "__main__":
     
     graph_builder.add_node('screen_node', screen_node)
     graph_builder.add_edge('dedup_node', 'screen_node')
-    graph_builder.add_edge("screen_node", END)
+
+    graph_builder.add_node('criteria_node', criteria_node)
+    graph_builder.add_edge('screen_node', 'criteria_node')
+
+    graph_builder.add_node('eligibility_node', eligibility_node)
+    graph_builder.add_edge('criteria_node', 'eligibility_node')
+
+    graph_builder.add_edge("eligibility_node", END)
     lit_agent_graph = graph_builder.compile()
 
 
@@ -53,7 +59,9 @@ if __name__ == "__main__":
         "sub_queries": [],
         "raw_papers": [],
         "deduped_papers": [],
-        'filtered_papers':[],
+        'screened_papers':[],
+        'eligibility_criteria': None,
+        'eligible_papers':[]
     }
 
     result = lit_agent_graph.invoke(state)

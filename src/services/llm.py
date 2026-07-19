@@ -1,6 +1,7 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from src.config import API_KEYS
-from google.api_core.exceptions import ResourceExhausted, TooManyRequests
+from langchain_google_genai.chat_models import ChatGoogleGenerativeAIError
+
 import time
 current_key = 0
 LLM_cache = {}  # cache instance theo key index
@@ -14,6 +15,10 @@ def get_llm(key_idx: int) -> ChatGoogleGenerativeAI:
         )
     return LLM_cache[key_idx]
 
+def is_quota_error(e: Exception) -> bool:
+    msg = str(e)
+    return "RESOURCE_EXHAUSTED" in msg or "429" in msg
+
 def invoke_gemini(prompt , output_schema=None,  max_retries_per_key: int = 3) :
     global current_key
 
@@ -26,11 +31,20 @@ def invoke_gemini(prompt , output_schema=None,  max_retries_per_key: int = 3) :
             try:
                 return llm.invoke(prompt)
 
-            except (ResourceExhausted, TooManyRequests) as e:
-                print(f"Key {current_key + 1} hết quota, chuyển key...")
-                current_key += 1
+            except ChatGoogleGenerativeAIError as e:
+                if is_quota_error(e):
+                    print(f"Key {current_key + 1} hết quota, chuyển key...")
+                    current_key += 1
+                    break  # thoát vòng retry, sang key mới
+                else:
+                    wait = 2 ** retry
+                    print(f"Lỗi tạm thời: {e} -> đợi {wait}s rồi thử lại")
+                    time.sleep(wait)
+                    if retry == max_retries_per_key - 1:
+                        raise
             except Exception as e:
                 print(f"Lỗi không liên quan quota: {e}")
+                print(f"DEBUG type: {type(e)}")
                 # lỗi không phải quota
                 wait = 2 ** retry
                 print(f"Lỗi tạm thời: {e} -> đợi {wait}s rồi thử lại")

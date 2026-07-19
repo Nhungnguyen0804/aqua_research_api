@@ -6,5 +6,5 @@ def rq_pico_node(state: LitState) -> LitState:
     mess = build_rq_rico_prompt(state['topic'])
     pico = invoke_gemini(mess, PICO)
     print(f'[pico] = {pico}')
-    state['research_question'] = pico
+    state['pico'] = pico
     return state 

@@ -20,3 +20,6 @@ class PaperRelevance(BaseModel):
 class FilterResult(BaseModel):
     results: list[PaperRelevance]
 
+class EligibilityCriteria(BaseModel):
+    inclusion_criteria: list[str]
+    exclusion_criteria: list[str]

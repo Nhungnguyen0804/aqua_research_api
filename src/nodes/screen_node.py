@@ -48,7 +48,7 @@ def rank_papers_by_similarity(pico, papers):
     return results
 
 
-def select_by_threshold(ranked_papers, threshold: float = 0.35) -> list[dict]:
+def select_by_threshold(ranked_papers, threshold: float = 0.5) -> list[dict]:
     # giữ lại các bài có cosine similarity ≥ 0.35 với PICO query
     result = []
     for paper, score in ranked_papers:
@@ -70,7 +70,7 @@ def screen_node(state: LitState) -> LitState:
     
     print(f'[filter] số lượng paper lọc theo năm: {len(year_filtered)}' )
 
-    pico = state.get('research_question')
+    pico = state.get('pico')
     print(f'[filter] pico = {pico}')
 
     ranked = rank_papers_by_similarity(pico, year_filtered)
