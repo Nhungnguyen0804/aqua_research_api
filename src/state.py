@@ -12,6 +12,8 @@ class LitState(TypedDict):
     screened_papers: List[dict]
     eligibility_criteria: EligibilityCriteria
     eligible_papers: List[dict]
-
+    included_papers: List[dict]
+    reviewed_papers: List[dict]
+    
 
 

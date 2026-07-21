@@ -2,6 +2,7 @@ from copy import deepcopy
 from src.services.embedding import embed_text, embed_text_list, compute_similarity
 from datetime import datetime
 from src.state import LitState
+from src.utils import save_list_dict_to_csv
 SKIP_YEAR = 5
 MIN_YEAR = datetime.now().year - SKIP_YEAR  # bỏ bài cũ hơn 10 năm
 
@@ -12,7 +13,7 @@ def check_condition_year(paper: dict) -> bool:
         return False
     if year >= MIN_YEAR:
         return True
-
+    else: return False 
 def build_pico_query_text(pico):
     return " ".join([
         pico.population,
@@ -48,9 +49,17 @@ def rank_papers_by_similarity(pico, papers):
     return results
 
 
-def select_by_threshold(ranked_papers, threshold: float = 0.5) -> list[dict]:
+def select_by_threshold(ranked_papers, threshold: float = None) -> list[dict]:
     # giữ lại các bài có cosine similarity ≥ 0.35 với PICO query
     result = []
+    scores = [score for _, score in ranked_papers]
+    max_score = max(scores)
+    min_score = min(scores)
+
+    if threshold is None:
+        threshold = (max_score + min_score) / 2
+    print(f"[screen] min={min_score:.4f} max={max_score:.4f} threshold={threshold:.4f}")
+
     for paper, score in ranked_papers:
         if score >= threshold:
             p = deepcopy(paper)
@@ -77,6 +86,10 @@ def screen_node(state: LitState) -> LitState:
 
     screened = select_by_threshold(ranked)
     print(f'[screen] số lượng paper sau semantic screening: {len(screened)}')
+    # topic_dir
+    topic_dir = 'data/topic_dir'
+    path = f'{topic_dir}/screened_papers.csv'
+    save_list_dict_to_csv(screened, path)
     state['screened_papers'] = screened
     return state 
 

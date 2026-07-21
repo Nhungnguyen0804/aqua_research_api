@@ -11,6 +11,8 @@ from src.nodes.query_expand import query_expansion_node
 from src.nodes.rq_pico import rq_pico_node
 from src.nodes.screen_node import screen_node
 from src.nodes.eligibility_node import eligibility_node, criteria_node
+from src.nodes.extract_node import extract_node
+from src.nodes.review_node import reviewer_node
 '''
 add_node(name, function) → đăng ký node.
 add_edge(A, B) → nối từ node A sang node B.
@@ -40,7 +42,13 @@ if __name__ == "__main__":
     graph_builder.add_node('eligibility_node', eligibility_node)
     graph_builder.add_edge('criteria_node', 'eligibility_node')
 
-    graph_builder.add_edge("eligibility_node", END)
+    graph_builder.add_node('extract_node', extract_node)
+    graph_builder.add_edge('eligibility_node', 'extract_node')
+
+    graph_builder.add_node('reviewer_node', reviewer_node)
+    graph_builder.add_edge('extract_node', 'reviewer_node')
+
+    graph_builder.add_edge("reviewer_node", END)
     lit_agent_graph = graph_builder.compile()
 
 
@@ -55,13 +63,15 @@ if __name__ == "__main__":
     # test
     state = {
         "topic": "Retrieval Augmented Generation",
-        'research_question': None,
+        'pico': None,
         "sub_queries": [],
         "raw_papers": [],
         "deduped_papers": [],
         'screened_papers':[],
         'eligibility_criteria': None,
-        'eligible_papers':[]
+        'eligible_papers':[],
+        'included_papers':[],
+        'reviewed_papers':[]
     }
 
     result = lit_agent_graph.invoke(state)

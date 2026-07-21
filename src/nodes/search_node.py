@@ -1,10 +1,10 @@
 import arxiv
 import requests
 import time 
-
+import os
 from src.state import LitState
 from src.config import MY_GMAIL,CORE_API_KEY
-
+from src.utils import save_list_dict_to_csv
 def search_openalex(topic: str, max_results: int = 50) -> list[dict]:
     url = "https://api.openalex.org/works"
     params = {
@@ -127,6 +127,7 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
     return []
 
 def search_node(state: LitState) -> LitState:
+
     print(f"[search] query={state['topic']}")
     query = state['topic']
     sub_queries = state.get("sub_queries", [])
@@ -143,5 +144,15 @@ def search_node(state: LitState) -> LitState:
         all_papers.extend(papers_arxiv)  
         all_papers.extend(papers_openalex)
         all_papers.extend(papers_core)
+
+    # topic_dir
+    topic_dir = 'data/topic_dir'
+    path = f'{topic_dir}/raw_papers.csv'
+    os.makedirs(path, exist_ok=True)
+
+    save_list_dict_to_csv(all_papers, path)
+
     state['raw_papers'] = all_papers
     return state 
+
+

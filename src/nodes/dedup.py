@@ -1,5 +1,6 @@
 import re 
 from rapidfuzz import fuzz
+from src.utils import save_list_dict_to_csv
 
 from src.state import LitState
 
@@ -155,5 +156,9 @@ def dedup_node(state):
     deduped = dedup_by_title(deduped,no_doi)
 
     print(f"[dedup] số báo sau dedup ={len(deduped)}")
+    # topic_dir
+    topic_dir = 'data/topic_dir'
+    path = f'{topic_dir}/deduped_papers.csv'
+    save_list_dict_to_csv(deduped, path)
     state["deduped_papers"] = deduped
     return state

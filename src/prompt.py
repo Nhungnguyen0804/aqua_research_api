@@ -83,3 +83,42 @@ def build_eligibility_prompt(criteria, papers: list[dict]) -> list[dict]:
         {"role": "user", "content": json.dumps(papers_for_llm, ensure_ascii=False)}
     ]
 
+def build_extract_prompt(paper: dict) -> list[dict]:
+    text = paper.get("full_text") or paper.get("abstract") or ""
+    title = paper.get("title", "")
+
+    system_prompt = f'''
+        {DEFAULT_TEXT}
+        Bạn là trợ lý nghiên cứu khoa học. Đọc nội dung bài báo và trích xuất chính xác 
+        contribution, method, limitation, key findings. Chỉ dựa trên nội dung được cung cấp, 
+        không suy đoán ngoài văn bản. Nếu không đủ thông tin cho 1 mục, ghi 'Không đủ thông tin'.
+    '''
+    user_prompt = f"Title: {title}\n\nNội dung bài báo:\n{text}"
+
+    return [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ]
+
+
+def build_review_prompt(paper: dict) -> list[dict]:
+    text = paper.get("full_text") or ""
+    system_prompt = f'''
+        Bạn là reviewer kiểm tra chất lượng trích xuất. So sánh phần 
+        'Extracted Info' với 'Source Text'. Đánh giá xem contribution, method, 
+        limitation, key_findings có được nội dung gốc hỗ trợ (grounded) không, 
+        hay là suy diễn/bịa đặt (hallucinated). Nếu bất kỳ mục nào không có 
+        căn cứ rõ ràng trong source text, đánh dấu is_grounded=False và nêu rõ mục nào có vấn đề trong 'issues'.
+    '''
+    user_prompt = (
+        f"Source Text:\n{text}\n\n"
+        f"Extracted Info:\n"
+        f"- Contribution: {paper.get('contribution')}\n"
+        f"- Method: {paper.get('method')}\n"
+        f"- Limitation: {paper.get('limitation')}\n"
+        f"- Key Findings: {paper.get('key_findings')}\n"
+    )
+    return [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ]

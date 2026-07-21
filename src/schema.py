@@ -23,3 +23,13 @@ class FilterResult(BaseModel):
 class EligibilityCriteria(BaseModel):
     inclusion_criteria: list[str]
     exclusion_criteria: list[str]
+
+class PaperAnalysis(BaseModel):
+    contribution: str = Field(description="Đóng góp chính của bài báo")
+    method: str = Field(description="Phương pháp/kỹ thuật chính được sử dụng")
+    limitation: str = Field(description="Hạn chế được tác giả nêu ra hoặc suy ra được")
+    key_findings: str = Field(description="Kết quả/phát hiện chính")
+
+class ReviewResult(BaseModel):
+    is_grounded: bool = Field(description="True nếu extracted info được source text hỗ trợ")
+    issues: str = Field(default="", description="Mô tả các mục không có căn cứ, nếu có")

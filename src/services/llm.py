@@ -19,6 +19,15 @@ def is_quota_error(e: Exception) -> bool:
     msg = str(e)
     return "RESOURCE_EXHAUSTED" in msg or "429" in msg
 
+def is_auth_error(e: Exception) -> bool:
+    msg = str(e)
+    return (
+        "UNAUTHENTICATED" in msg
+        or "401" in msg
+        or "ACCESS_TOKEN_TYPE_UNSUPPORTED" in msg
+        or "invalid authentication credentials" in msg.lower()
+    )
+
 def invoke_gemini(prompt , output_schema=None,  max_retries_per_key: int = 3) :
     global current_key
 
@@ -36,6 +45,10 @@ def invoke_gemini(prompt , output_schema=None,  max_retries_per_key: int = 3) :
                     print(f"Key {current_key + 1} hết quota, chuyển key...")
                     current_key += 1
                     break  # thoát vòng retry, sang key mới
+                if is_auth_error(e):
+                    print(f"API key {current_key} bị lỗi xác thực -> bỏ key này")
+                    current_key += 1
+                    break 
                 else:
                     wait = 2 ** retry
                     print(f"Lỗi tạm thời: {e} -> đợi {wait}s rồi thử lại")
