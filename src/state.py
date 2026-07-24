@@ -1,4 +1,4 @@
-from typing import TypedDict, List, Optional,Annotated
+from typing import TypedDict, List, Optional,Annotated, Any 
 from src.schema import PICO,EligibilityCriteria
 # dữ liệu chạy xuyên suốt
 
@@ -14,6 +14,8 @@ class LitState(TypedDict):
     eligible_papers: List[dict]
     included_papers: List[dict]
     reviewed_papers: List[dict]
-    
+    synthesis: Any
+    report_path: str 
+
 
 

@@ -33,3 +33,19 @@ class PaperAnalysis(BaseModel):
 class ReviewResult(BaseModel):
     is_grounded: bool = Field(description="True nếu extracted info được source text hỗ trợ")
     issues: str = Field(default="", description="Mô tả các mục không có căn cứ, nếu có")
+
+
+class ThemeGroup(BaseModel):
+    theme_name: str
+    description: str
+    papers: list[str] 
+
+class ResearchGap(BaseModel):
+    gap_description: str
+    supporting_papers: list[str] # paper cho thấy gap này 
+
+class SynthesisResult(BaseModel):
+    overall_summary: str
+    themes: list[ThemeGroup]
+    gaps: list[ResearchGap]
+    recommendations: str

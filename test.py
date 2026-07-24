@@ -13,6 +13,8 @@ from src.nodes.screen_node import screen_node
 from src.nodes.eligibility_node import eligibility_node, criteria_node
 from src.nodes.extract_node import extract_node
 from src.nodes.review_node import reviewer_node
+from src.nodes.synthesize_node import synthesize_node
+from src.nodes.report_node import report_node
 '''
 add_node(name, function) → đăng ký node.
 add_edge(A, B) → nối từ node A sang node B.
@@ -25,30 +27,9 @@ if __name__ == "__main__":
     graph_builder.add_edge(START, "research_question_node")
     
     graph_builder.add_node("query_expansion_node", query_expansion_node)
-    graph_builder.add_edge('research_question_node', "query_expansion_node")
-
-    graph_builder.add_node("search_node", search_node)
-    graph_builder.add_edge("query_expansion_node", "search_node")
-
-    graph_builder.add_node("dedup_node", dedup_node)
-    graph_builder.add_edge('search_node','dedup_node')
-    
-    graph_builder.add_node('screen_node', screen_node)
-    graph_builder.add_edge('dedup_node', 'screen_node')
-
-    graph_builder.add_node('criteria_node', criteria_node)
-    graph_builder.add_edge('screen_node', 'criteria_node')
-
-    graph_builder.add_node('eligibility_node', eligibility_node)
-    graph_builder.add_edge('criteria_node', 'eligibility_node')
-
-    graph_builder.add_node('extract_node', extract_node)
-    graph_builder.add_edge('eligibility_node', 'extract_node')
-
-    graph_builder.add_node('reviewer_node', reviewer_node)
-    graph_builder.add_edge('extract_node', 'reviewer_node')
-
-    graph_builder.add_edge("reviewer_node", END)
+    graph_builder.add_edge("research_question_node", "query_expansion_node")
+   
+    graph_builder.add_edge("query_expansion_node", END)
     lit_agent_graph = graph_builder.compile()
 
 
@@ -71,7 +52,9 @@ if __name__ == "__main__":
         'eligibility_criteria': None,
         'eligible_papers':[],
         'included_papers':[],
-        'reviewed_papers':[]
+        'reviewed_papers':[],
+        'synthesis':None,
+        'report_path': None,
     }
 
     result = lit_agent_graph.invoke(state)

@@ -42,6 +42,9 @@ def eligibility_node(state: LitState) -> LitState:
                     eligible_papers.append(paper)
 
     print(f'[eligibility] số lượng paper sau Eligibility: {len(eligible_papers)}')
+    TOP_K = 10
+    if len(eligible_papers) > TOP_K: 
+        eligible_papers = eligible_papers[:TOP_K]
     # topic_dir
     topic_dir = 'data/topic_dir'
     path = f'{topic_dir}/eligible_papers.csv'

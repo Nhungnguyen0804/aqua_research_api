@@ -117,7 +117,8 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
         except requests.exceptions.Timeout:
             print(f"[CORE TIMEOUT] {topic} (retry {retry+1})")
         except requests.exceptions.HTTPError as e:
-            if resp.status_code == 504:
+            status = resp.status_code
+            if status >= 500:
                 print(f"[CORE 504] {topic} (retry {retry+1})")
             else:
                 raise
@@ -133,13 +134,28 @@ def search_node(state: LitState) -> LitState:
     sub_queries = state.get("sub_queries", [])
     print(f"[search] sub_queries={state['sub_queries']}")
     if not sub_queries:
-        sub_queries = query
+        sub_queries = [query]
 
     all_papers = []
     for sub_query in sub_queries:
-        papers_arxiv = search_arxiv(sub_query)
-        papers_openalex = search_openalex(sub_query)
-        papers_core = search_core(sub_query)
+        try:
+            papers_arxiv = search_arxiv(sub_query)
+        except Exception as e:
+            print('Lỗi arxiv: ',e )
+            papers_arxiv = []
+
+        try:
+            papers_openalex = search_openalex(sub_query)
+        except Exception as e:
+            print('Lỗi arxiv: ',e )
+            papers_openalex = []
+
+        try:
+            papers_core = search_core(sub_query)
+        except Exception as e:
+            print('Lỗi arxiv: ',e )  
+            papers_core = []
+    
     
         all_papers.extend(papers_arxiv)  
         all_papers.extend(papers_openalex)
@@ -148,7 +164,7 @@ def search_node(state: LitState) -> LitState:
     # topic_dir
     topic_dir = 'data/topic_dir'
     path = f'{topic_dir}/raw_papers.csv'
-    os.makedirs(path, exist_ok=True)
+    os.makedirs(topic_dir, exist_ok=True)
 
     save_list_dict_to_csv(all_papers, path)
 

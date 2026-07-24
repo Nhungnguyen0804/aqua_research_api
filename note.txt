@@ -38,3 +38,7 @@ E:\LitResearcher\lit-env\Scripts\python.exe -m pip install google-api-core
 pip install sentence-transformers --break-system-packages
 E:\LitResearcher\lit-env\Scripts\python.exe -m pip install sentence-transformers --break-system-packages
 
+pip install fastapi uvicorn
+
+E:\LitResearcher\lit-env\Scripts\python.exe -m pip install fastapi uvicorn
+

@@ -122,3 +122,32 @@ def build_review_prompt(paper: dict) -> list[dict]:
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt},
     ]
+
+
+def build_synthesis_prompt(reviewed_papers: list[dict]) -> list[dict]:
+    papers_brief = []
+    for p in reviewed_papers:
+        papers_brief.append({
+            "paper_id": p.get("paper_id"),
+            "doi": p.get("doi"),
+            "title": p.get("title"),
+            "year": p.get("year"),
+            "contribution": p.get("contribution"),
+            "method": p.get("method"),
+            "limitation": p.get("limitation"),
+            "key_findings": p.get("key_findings"),
+        })
+
+    system = (
+        "Bạn là trợ lý nghiên cứu khoa học. Dựa trên danh sách các paper đã tóm tắt bên dưới, "
+        "hãy: (1) nhóm các paper theo hướng tiếp cận/phương pháp chung, "
+        "(2) chỉ ra research gap dựa trên các limitation được lặp lại hoặc chưa ai giải quyết, "
+        "(3) đưa ra nhận định tổng quan và đề xuất hướng nghiên cứu tiếp theo. "
+        "LUÔN trích dẫn paper bằng paper_id đã cho, không được bịa thông tin ngoài dữ liệu."
+    )
+    user = f"Danh sách papers:\n{papers_brief}"
+
+    return [
+        {"role": "system", "content": system},
+        {"role": "user", "content": user},
+    ]
