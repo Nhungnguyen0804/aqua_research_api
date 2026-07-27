@@ -9,7 +9,7 @@ import collections
 import collections.abc
 if not hasattr(collections, 'Sequence'):
     collections.Sequence = collections.abc.Sequence
-    
+
 import os
 os.environ["HF_HOME"] = "/tmp/huggingface"
 os.environ["TORCH_HOME"] = "/tmp/torch"
@@ -18,7 +18,7 @@ app = FastAPI(title="Aqua Research AI API")
 # Cho phép FE chạy port nào cx gọi được API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"], 
+    allow_origins=["http://localhost:5173", "http://localhost:3000" ,"https://nhungnguyen0804.github.io/aqua_research/"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
