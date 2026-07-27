@@ -44,12 +44,12 @@ def report_node(state: LitState) -> LitState:
     for t in synthesis.get("themes", []):
         md.append(f"**{t['theme_name']}**  ")
         md.append(f"{t['description']}  ")
-        md.append(f"*Papers liên quan: {', '.join(t['paper_ids'])}*\n")
+        md.append(f"*Papers liên quan: {', '.join(t['papers'])}*\n")
 
     md.append("## 4. Research Gaps")
     for g in synthesis.get("gaps", []):
         md.append(f"- {g['gap_description']}  ")
-        md.append(f"  *(dựa trên: {', '.join(g['supporting_paper_ids'])})*")
+        md.append(f"  *(dựa trên: {', '.join(g['supporting_papers'])})*")
     md.append("")
 
     md.append("## 5. Danh sách paper đã đưa vào review")
@@ -66,5 +66,5 @@ def report_node(state: LitState) -> LitState:
         f.write(report_text)
 
     print(f"[report] đã xuất báo cáo -> {path}")
-    state["report_path"] = path
+    state["report_content"] = report_text
     return state

@@ -9,7 +9,7 @@ def synthesize_node(state: LitState) -> LitState:
     # chỉ lấy paper "grounded" (extract đúng) để synthesis sạch
     good_papers = [p for p in reviewed_papers if p.get("review_status") == "grounded"]
     if not good_papers:
-        good_papers = reviewed_papers  # fallback nếu lọc hết mất
+        good_papers = reviewed_papers  # fallback 
 
     print(f"[synthesize] đang tổng hợp từ {len(good_papers)} papers...")
     messages = build_synthesis_prompt(good_papers)

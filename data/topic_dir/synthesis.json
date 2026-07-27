@@ -1,0 +1,60 @@
+{
+  "overall_summary": "Các bài báo đã xem xét cùng nhau khám phá lĩnh vực kinh tế học tác nhân AI đang nổi lên, tập trung vào cách các tác nhân AI tự chủ tương tác trong các hệ thống kinh tế, quy trình ra quyết định của chúng và tác động của chúng đến thị trường, lao động và xã hội. Chúng đề xuất các khuôn khổ khái niệm, môi trường mô phỏng và thiết kế kiến trúc để tích hợp các tác nhân AI vào nhiều lĩnh vực khác nhau, đặc biệt là tài chính và thị trường lao động. Một chủ đề lặp đi lặp lại là nhu cầu về các hệ thống AI đáng tin cậy, đạo đức và được quản lý tốt để khai thác lợi ích của chúng đồng thời giảm thiểu rủi ro.",
+  "themes": [
+    {
+      "theme_name": "Khuôn khổ Khái niệm và Nguyên tắc Kinh tế học Tác nhân AI",
+      "description": "Các bài báo này thiết lập các nguyên tắc nền tảng và khuôn khổ lý thuyết để hiểu các tác nhân AI như các tác nhân kinh tế, quá trình ra quyết định của chúng và sự tương tác của chúng với các tác nhân con người và AI khác trong bối cảnh kinh tế. Chúng thường tập trung vào việc xác định các đặc điểm độc đáo của tác nhân AI và cách chúng tích hợp vào các lý thuyết kinh tế hiện có.",
+      "papers": [
+        "2505.20273v1",
+        "2406.00477v1",
+        "2603.13942v3",
+        "321969203"
+      ]
+    },
+    {
+      "theme_name": "Mô phỏng Dựa trên Tác nhân và Động lực Kinh tế Nổi lên",
+      "description": "Nhóm này tập trung vào việc xây dựng các môi trường mô phỏng để mô hình hóa và nghiên cứu các tương tác phức tạp và hành vi nổi lên của các tác nhân AI trong các hệ thống kinh tế, chẳng hạn như thị trường lao động hoặc bối cảnh kinh tế vĩ mô rộng lớn hơn. Chúng sử dụng các kỹ thuật học đa tác nhân để quan sát cách các tác nhân thích nghi, chuyên môn hóa và cạnh tranh, cũng như cách thiết kế thị trường ảnh hưởng đến các động lực này.",
+      "papers": [
+        "2512.04988v2",
+        "2606.02859v1",
+        "2402.09563v2"
+      ]
+    },
+    {
+      "theme_name": "Độ tin cậy, Đạo đức và Chính sách cho Tác nhân AI",
+      "description": "Các bài báo này nhấn mạnh tầm quan trọng của việc phát triển các hệ thống tác nhân AI đáng tin cậy và đạo đức, đặc biệt trong các lĩnh vực rủi ro cao như tài chính. Chúng thảo luận về nhu cầu đối với các khuôn khổ pháp lý, quản trị và các can thiệp chính sách để đảm bảo triển khai có trách nhiệm, giảm thiểu rủi ro và đạt được lợi ích xã hội công bằng từ AI.",
+      "papers": [
+        "2505.20273v1",
+        "291805228",
+        "313190528",
+        "321969203"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "gap_description": "Phạm vi hạn chế của quyền tự chủ và sở thích của tác nhân AI: Một số bài báo thừa nhận những hạn chế trong việc mô hình hóa đầy đủ quyền tự chủ và sở thích phức tạp của tác nhân AI. Các mô hình hiện tại thường đơn giản hóa quá trình ra quyết định của AI để phù hợp với mục tiêu của con người hoặc hạn chế khả năng tương tác của chúng, điều này có thể không nắm bắt được toàn bộ các hành vi tiềm năng của AI, bao gồm tự bảo tồn hoặc các mục tiêu không phù hợp.",
+      "supporting_papers": [
+        "2505.20273v1",
+        "2406.00477v1",
+        "2603.13942v3"
+      ]
+    },
+    {
+      "gap_description": "Thách thức trong việc hiệu chỉnh, xác thực và khả năng ứng dụng thực tế của các mô hình dựa trên tác nhân: Các mô hình dựa trên tác nhân (ABM) và mô phỏng học tăng cường đa tác nhân (MARL) đối mặt với những thách thức đáng kể trong việc hiệu chỉnh do mức độ tự do cao, đảm bảo tính ổn định và phản ánh chính xác các phức tạp trong thế giới thực. Việc đơn giản hóa các nhiệm vụ, cơ chế thị trường và các ràng buộc tính toán hạn chế khả năng dự đoán trực tiếp của chúng đối với các hệ thống kinh tế thực tế.",
+      "supporting_papers": [
+        "2512.04988v2",
+        "2402.09563v2"
+      ]
+    },
+    {
+      "gap_description": "Thiếu hiểu biết toàn diện về rủi ro hệ thống và quản trị cho AI tác nhân tiên tiến: Mặc dù các bài báo thừa nhận rủi ro cao và nhu cầu điều tiết, nhưng có một khoảng trống được công nhận trong việc hiểu và giải quyết đầy đủ các hàm ý hệ thống, tiềm năng gây ra hậu quả không mong muốn và các khuôn khổ quản trị mạnh mẽ cho các tác nhân AI có tính tự chủ cao, đặc biệt trong các lĩnh vực quan trọng như tài chính. Trọng tâm hiện tại thường là quyền tự chủ hạn chế hoặc các mô hình khái niệm thay vì các mô hình cân bằng được giải quyết hoàn chỉnh về các tương tác chiến lược phức tạp.",
+      "supporting_papers": [
+        "2505.20273v1",
+        "2603.13942v3",
+        "291805228"
+      ]
+    }
+  ],
+  "recommendations": "Các bài báo đã xem xét cùng nhau nhấn mạnh tiềm năng biến đổi của các tác nhân AI trên các lĩnh vực kinh tế, từ thị trường tài chính đến động lực lao động. Một nhận định quan trọng là tác động của các tác nhân AI không chỉ phụ thuộc vào trí thông minh của chúng mà còn phụ thuộc vào kiến trúc, quản trị và sự tích hợp của chúng vào các hệ thống của con người. Lĩnh vực này đang chuyển từ việc xem AI chỉ là công nghệ sang hiểu nó như một tác nhân kinh tế với các quy trình ra quyết định và tương tác riêng biệt. Nghiên cứu trong tương lai nên ưu tiên:\n1. Phát triển các mô hình tác nhân AI tinh vi hơn: Vượt ra ngoài các giả định đơn giản hóa về sở thích và quyền tự chủ của tác nhân AI để kết hợp các hành vi phức tạp hơn, có khả năng không phù hợp hoặc định hướng tự bảo tồn. Điều này bao gồm mô hình hóa các vòng lặp phản hồi giữa con người và AI và các chế độ lỗi cụ thể của AI (ví dụ: sai lệch hành vi, lập kế hoạch dễ vỡ) hiện đang bị bỏ qua (2603.13942v3, 2406.00477v1).\n2. Nâng cao tính thực tế và khả năng mở rộng của các mô phỏng dựa trên tác nhân: Giải quyết các thách thức về hiệu chỉnh, xác thực và các ràng buộc tính toán trong ABM và MARL. Các trình mô phỏng trong tương lai nên hướng tới việc kết hợp các cơ chế thị trường thực tế hơn, quy trình sản xuất nhiều giai đoạn, sở thích khách hàng không đồng nhất và các phương pháp đánh giá mạnh mẽ hơn ngoài các nhiệm vụ vi mô đơn giản hóa (2512.04988v2, 2402.09563v2).\n3. Các khuôn khổ quản trị và chính sách mạnh mẽ cho AI tác nhân: Với rủi ro cao, đặc biệt trong lĩnh vực tài chính, có một nhu cầu cấp thiết về nghiên cứu toàn diện về các cơ chế pháp lý, hướng dẫn đạo đức và khuôn khổ pháp lý có thể quản lý các rủi ro hệ thống của các tác nhân AI có tính tự chủ cao. Điều này bao gồm việc khám phá cách xây dựng các chuẩn mực chung về hành vi có lợi và các đặc tả chính thức cho các ràng buộc đáng tin cậy trước khi triển khai rộng rãi (2505.20273v1, 291805228, 313190528).\n4. Khám phá trí tuệ nổi lên trong các hệ thống kinh tế phi tập trung: Tiếp tục điều tra cách các khuyến khích kinh tế phi tập trung có thể thúc đẩy sự tự tổ chức, chuyên môn hóa và hợp tác giữa các tác nhân AI, dẫn đến trí tuệ tập thể nổi lên, như được chứng minh bởi EOM (2606.02859v1). Điều này có thể liên quan đến việc khám phá sự thích nghi ngoài không gian lời nhắc để bao gồm phát triển kỹ năng hoặc biểu diễn mới.\n5. Nghiên cứu liên ngành về trí tuệ biên tác nhân: Thu hẹp khoảng cách giữa điện toán biên, hệ thống đa tác nhân và kinh tế học tính toán để hiện thực hóa các nền kinh tế AI tự tổ chức, thời gian thực cho việc trao đổi tài nguyên hiệu quả (321969203). Điều này đòi hỏi phải giải quyết các thách thức như khả năng mở rộng, khả năng tương tác, ổn định thị trường và quản trị đạo đức trong các hệ thống AI phân tán.\nBằng cách giải quyết các lĩnh vực này, nghiên cứu có thể hướng dẫn tốt hơn việc tích hợp có trách nhiệm và có lợi của các tác nhân AI vào nền kinh tế toàn cầu."
+}

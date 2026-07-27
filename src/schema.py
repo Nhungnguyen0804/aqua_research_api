@@ -49,3 +49,7 @@ class SynthesisResult(BaseModel):
     themes: list[ThemeGroup]
     gaps: list[ResearchGap]
     recommendations: str
+
+
+class TopicRequest(BaseModel):
+    topic: str
