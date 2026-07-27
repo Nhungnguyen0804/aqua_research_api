@@ -65,7 +65,7 @@ ormsgpack==1.12.2
 packaging==26.2
 pandas==3.0.3
 parso==0.8.7
-pathlib==1.0.1
+
 pillow==12.3.0
 prompt_toolkit==3.0.52
 proto-plus==1.28.1
