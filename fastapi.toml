@@ -1,2 +1,0 @@
-[app]
-entrypoint = "src.main:app"
