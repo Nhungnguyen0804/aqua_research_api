@@ -7,15 +7,15 @@ asttokens==3.0.2
 certifi==2026.6.17
 cffi==2.1.0
 charset-normalizer==3.4.9
-ci-info==0.4.0
+
 click==8.4.2
 colorama==0.4.6
-configobj==5.0.9
+
 configparser==7.2.0
 cryptography==49.0.0
 decorator==5.3.1
 distro==1.9.0
-etelemetry==0.3.1
+
 executing==2.2.1
 fastapi==0.139.2
 filelock==3.31.0
@@ -48,7 +48,7 @@ langgraph-checkpoint==4.1.1
 langgraph-prebuilt==1.1.0
 langgraph-sdk==0.4.2
 langsmith==0.10.5
-looseversion==1.3.0
+
 lxml==6.1.1
 markdown-it-py==4.2.0
 MarkupSafe==3.0.3
@@ -57,8 +57,8 @@ mdurl==0.1.2
 mpmath==1.3.0
 narwhals==2.24.0
 networkx==3.6.1
-nibabel==5.4.2
-nipype==1.11.0
+
+
 numpy==2.4.6
 orjson==3.11.9
 ormsgpack==1.12.2
@@ -70,7 +70,7 @@ pillow==12.3.0
 prompt_toolkit==3.0.52
 proto-plus==1.28.1
 protobuf==7.35.1
-prov==2.5.1
+
 psutil==7.2.2
 pure_eval==0.2.3
 puremagic==1.30
@@ -79,16 +79,16 @@ pyasn1_modules==0.4.2
 pycparser==3.0
 pydantic==2.13.4
 pydantic_core==2.46.4
-pydot==4.0.1
+
 Pygments==2.20.0
 pymupdf==1.28.0
 pyparsing==3.3.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
-pyxnat==1.6.4
+
 PyYAML==6.0.3
 RapidFuzz==3.14.5
-rdflib==7.6.0
+
 regex==2026.7.19
 requests==2.33.1
 requests-toolbelt==1.0.0
@@ -112,7 +112,7 @@ torch
 
 tqdm==4.69.0
 traitlets==5.15.1
-traits==7.1.0
+
 transformers
 typer==0.27.0
 typing-inspection==0.4.2
