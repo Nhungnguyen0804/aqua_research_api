@@ -162,11 +162,11 @@ def search_node(state: LitState) -> LitState:
         all_papers.extend(papers_core)
 
     # topic_dir
-    topic_dir = 'data/topic_dir'
-    path = f'{topic_dir}/raw_papers.csv'
-    os.makedirs(topic_dir, exist_ok=True)
+    # topic_dir = 'data/topic_dir'
+    # path = f'{topic_dir}/raw_papers.csv'
+    # os.makedirs(topic_dir, exist_ok=True)
 
-    save_list_dict_to_csv(all_papers, path)
+    # save_list_dict_to_csv(all_papers, path)
 
     state['raw_papers'] = all_papers
     return state 

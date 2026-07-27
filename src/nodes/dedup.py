@@ -157,8 +157,8 @@ def dedup_node(state):
 
     print(f"[dedup] số báo sau dedup ={len(deduped)}")
     # topic_dir
-    topic_dir = 'data/topic_dir'
-    path = f'{topic_dir}/deduped_papers.csv'
-    save_list_dict_to_csv(deduped, path)
+    # topic_dir = 'data/topic_dir'
+    # path = f'{topic_dir}/deduped_papers.csv'
+    # save_list_dict_to_csv(deduped, path)
     state["deduped_papers"] = deduped
     return state

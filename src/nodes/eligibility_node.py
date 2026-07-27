@@ -46,9 +46,9 @@ def eligibility_node(state: LitState) -> LitState:
     if len(eligible_papers) > TOP_K: 
         eligible_papers = eligible_papers[:TOP_K]
     # topic_dir
-    topic_dir = 'data/topic_dir'
-    path = f'{topic_dir}/eligible_papers.csv'
-    save_list_dict_to_csv(eligible_papers, path)
+    # topic_dir = 'data/topic_dir'
+    # path = f'{topic_dir}/eligible_papers.csv'
+    # save_list_dict_to_csv(eligible_papers, path)
     state['eligible_papers'] = eligible_papers
     return state
 

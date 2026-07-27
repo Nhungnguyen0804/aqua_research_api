@@ -17,8 +17,8 @@ def synthesize_node(state: LitState) -> LitState:
 
     state["synthesis"] = result.model_dump()
 
-    with open("data/topic_dir/synthesis.json", "w", encoding="utf-8") as f:
-        json.dump(state["synthesis"], f, ensure_ascii=False, indent=2)
+    # with open("data/topic_dir/synthesis.json", "w", encoding="utf-8") as f:
+    #     json.dump(state["synthesis"], f, ensure_ascii=False, indent=2)
 
     print(f"[synthesize] xong. {len(result.themes)} themes, {len(result.gaps)} gaps")
     return state

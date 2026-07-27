@@ -47,8 +47,8 @@ def reviewer_node(state: LitState) -> LitState:
 
     print(f"[reviewer] xong. extract_true_count: {extract_true_count}, còn vấn đề: {len(results) - extract_true_count}")
     # topic_dir
-    topic_dir = 'data/topic_dir'
-    path = f'{topic_dir}/reviewed_papers.csv'
-    save_list_dict_to_csv(results, path)
+    # topic_dir = 'data/topic_dir'
+    # path = f'{topic_dir}/reviewed_papers.csv'
+    # save_list_dict_to_csv(results, path)
     state["reviewed_papers"] = results
     return state

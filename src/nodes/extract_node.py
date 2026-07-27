@@ -8,7 +8,7 @@ from src.services.llm import invoke_gemini
 from src.utils import save_list_dict_to_csv
 
 import random
-PDF_DIR = "data/pdfs"
+PDF_DIR = os.environ.get("PDF_DIR", "/tmp/pdfs")
 os.makedirs(PDF_DIR, exist_ok=True)
 def safe_filename(paper: str) -> str:
     # paper_id = paper.get('paper_id')
@@ -124,9 +124,9 @@ def extract_node(state: LitState) -> LitState:
     print(f"[fulltext] xong. thành công pdf: {success}, chỉ có abstract: {len(results) - success}")
     print(f"[fulltext] xong. thành công success_analysis: {success_analysis}, chỉ có abstract: {len(results) - success_analysis}")
     # topic_dir
-    topic_dir = 'data/topic_dir'
-    path = f'{topic_dir}/included_papers.csv'
-    save_list_dict_to_csv(results, path)
+    # topic_dir = 'data/topic_dir'
+    # path = f'{topic_dir}/included_papers.csv'
+    # save_list_dict_to_csv(results, path)
    
    
     state["included_papers"] = results

@@ -87,9 +87,9 @@ def screen_node(state: LitState) -> LitState:
     screened = select_by_threshold(ranked)
     print(f'[screen] số lượng paper sau semantic screening: {len(screened)}')
     # topic_dir
-    topic_dir = 'data/topic_dir'
-    path = f'{topic_dir}/screened_papers.csv'
-    save_list_dict_to_csv(screened, path)
+    # topic_dir = 'data/topic_dir'
+    # path = f'{topic_dir}/screened_papers.csv'
+    # save_list_dict_to_csv(screened, path)
     state['screened_papers'] = screened
     return state 
 

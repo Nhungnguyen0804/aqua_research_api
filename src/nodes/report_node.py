@@ -61,10 +61,10 @@ def report_node(state: LitState) -> LitState:
     md.append(synthesis.get("recommendations", "(chưa có)"))
 
     report_text = "\n".join(md)
-    path = "data/topic_dir/report.md"
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(report_text)
+    # path = "data/topic_dir/report.md"
+    # with open(path, "w", encoding="utf-8") as f:
+    #     f.write(report_text)
 
-    print(f"[report] đã xuất báo cáo -> {path}")
+    # print(f"[report] đã xuất báo cáo -> {path}")
     state["report_content"] = report_text
     return state
