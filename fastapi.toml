@@ -1,2 +1,2 @@
-[tool.fastapi]
+[app]
 entrypoint = "src.main:app"
