@@ -43,3 +43,6 @@ pip install fastapi uvicorn
 E:\LitResearcher\lit-env\Scripts\python.exe -m pip install fastapi uvicorn
 
 uvicorn src.api:app --reload
+
+
+E:\LitResearcher\lit-env\Scripts\python.exe -m pip freeze > requirements.txt
