@@ -1,7 +1,7 @@
 [project]
 name = "aqua-research-api"
 version = "0.1.0"
-requires-python = ">=3.10"
+requires-python = ">=3.11,<3.14.1"
 dependencies = [
     "acres==0.5.0",
     "annotated-doc==0.0.4",
