@@ -5,7 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.schema import TopicRequest
 from src.state import LitState
 from src.graph import lit_agent_graph
-
+import os
+os.environ["HF_HOME"] = "/tmp/huggingface"
+os.environ["TORCH_HOME"] = "/tmp/torch"
 app = FastAPI(title="Aqua Research AI API")
 
 # Cho phép FE chạy port nào cx gọi được API
