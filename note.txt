@@ -46,3 +46,4 @@ uvicorn src.api:app --reload
 
 
 E:\LitResearcher\lit-env\Scripts\python.exe -m pip freeze > requirements.txt
+uvicorn src.main:app --reload
