@@ -18,7 +18,7 @@ app = FastAPI(title="Aqua Research AI API")
 # Cho phép FE chạy port nào cx gọi được API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000" ,"https://nhungnguyen0804.github.io/aqua_research/"], 
+    allow_origins=["http://localhost:5173", "http://localhost:3000" ,"https://nhungnguyen0804.github.io/aqua_research"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
