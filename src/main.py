@@ -5,6 +5,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.schema import TopicRequest
 from src.state import LitState
 from src.graph import lit_agent_graph
+import collections
+import collections.abc
+if not hasattr(collections, 'Sequence'):
+    collections.Sequence = collections.abc.Sequence
+    
 import os
 os.environ["HF_HOME"] = "/tmp/huggingface"
 os.environ["TORCH_HOME"] = "/tmp/torch"
