@@ -89,7 +89,7 @@ def search_core(topic: str, max_results: int = 10, api_key: str = CORE_API_KEY) 
     }
     for retry in range(3):
         try: 
-            resp = requests.get(url, headers=headers, params=params, timeout=300)
+            resp = requests.get(url, headers=headers, params=params, timeout=30)
             resp.raise_for_status()
             results = resp.json().get("results", [])
             papers = []
